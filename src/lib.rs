@@ -10,12 +10,15 @@
 //!
 //! assert_eq!(interp(&x, &y, 0.35), 2.0);
 //! ```
-
+#![no_std]
 #![warn(missing_docs)]
 #![allow(unknown_lints)]
 #![warn(clippy::all, clippy::pedantic, clippy::cargo)]
 #![allow(clippy::many_single_char_names)]
+extern crate alloc;
 
+use alloc::vec;
+use alloc::vec::Vec;
 use num_traits::Num;
 
 use itertools::{izip, Itertools};
@@ -140,7 +143,7 @@ where
     T: Num + PartialOrd + Copy,
 {
     // The min-length of the x and y vectors. We ignore additional entries in either vec.
-    let min_len = std::cmp::min(x.len(), y.len());
+    let min_len = x.len().min(y.len());
 
     if min_len == 0 {
         T::zero()
@@ -197,7 +200,7 @@ where
     T: Num + PartialOrd + Copy,
 {
     // The min-length of the x and y vectors. We ignore additional entries in either vec.
-    let min_len = std::cmp::min(x.len(), y.len());
+    let min_len = x.len().min(y.len());
 
     if min_len == 0 {
         vec![T::zero(); xp.len()]
@@ -261,7 +264,7 @@ where
     T: Num + PartialOrd + Copy,
 {
     // The min-length of the x and y vectors. We ignore additional entries in either vec.
-    let min_len = std::cmp::min(x.len(), y.len());
+    let min_len = x.len().min(y.len());
 
     if min_len == 0 {
         [T::zero(); N]
